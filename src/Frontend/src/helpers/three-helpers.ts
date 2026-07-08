@@ -45,14 +45,6 @@ export function createText(content: string, color: number): Text {
   return text;
 }
 
-export function centerText(text: THREE.Mesh): void {
-  text.geometry.computeBoundingBox();
-  if (text.geometry.boundingBox) {
-    const centerOffsetX = -0.5 * (text.geometry.boundingBox.max.x - text.geometry.boundingBox.min.x);
-    text.position.x = centerOffsetX;
-  }
-}
-
 export function addStarfield(scene: THREE.Scene, count: number, color: number, size: number): void {
   const starGeometry = new THREE.BufferGeometry();
   const starMaterial = new THREE.PointsMaterial({ color: color, size: size });

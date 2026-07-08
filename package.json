@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "three": "^0.185.1",
+    "three.js": "^0.77.0",
+    "troika-three-text": "^0.52.4"
+  },
+  "devDependencies": {
+    "@types/three": "^0.185.0"
+  }
+}

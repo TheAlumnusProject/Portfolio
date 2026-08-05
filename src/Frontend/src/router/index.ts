@@ -15,11 +15,6 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/showcase',
-      name: 'showcase',
-      component: ShowcaseView,
-    },
-    {
       path: '/utility-hub',
       name: 'utility-hub',
       component: UtilityHubView,
@@ -28,6 +23,11 @@ const router = createRouter({
       path: '/ai-studio',
       name: 'ai-studio',
       component: AIStudioView,
+    },
+    {
+      path: '/showcase',
+      name: 'showcase',
+      component: ShowcaseView,
     },
     {
       path: '/people',

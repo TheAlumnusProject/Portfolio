@@ -13,9 +13,9 @@ const selectTheme = (name: string) => {
 
 const links = [
   { label: 'Home', to: '/' },
-  { label: 'Showcase', to: '/showcase' },
   { label: 'Utility Hub', to: '/utility-hub' },
   { label: 'AI Studio', to: '/ai-studio' },
+  { label: 'Showcase', to: '/showcase' },
   { label: 'People', to: '/people' },
   { label: 'Contact', to: '/contact' },
 ];

@@ -86,7 +86,6 @@ export function AddSpaceship(scene: THREE.Scene, gltfLoader: GLTFLoader): Promis
 
 let shouldBeVisible = true;
 export function animateSpaceship(scene: THREE.Scene, spaceship: THREE.Object3D): void {
-  // complex animation path where a small spaceship whips around the scene, moving in a figure-eight pattern
   const time = Date.now() * 0.0005;
   const radiusX = 100;
   const radiusY = 150;
@@ -98,7 +97,7 @@ export function animateSpaceship(scene: THREE.Scene, spaceship: THREE.Object3D):
   let x = -radiusX * Math.sin(time * 1) + offsetX;
   let y = -radiusY * Math.sin(time * 2) * 0.5 + offsetY;
   let z = -radiusZ * Math.cos(time * 1) + offsetZ;
-  // toggle direction when reaching certain z thresholds
+
   if (Math.cos(time) < -0.5) {
     shouldBeVisible = true;
   }
@@ -106,7 +105,6 @@ export function animateSpaceship(scene: THREE.Scene, spaceship: THREE.Object3D):
     shouldBeVisible = false;
   }
   spaceship.visible = shouldBeVisible ? true : false;
-  // clamp z
   z = Math.min(z, -80);
   if (Math.cos(time) > -0.4 && Math.cos(time) < 0) {
     z += (Math.cos(time) + 0.4) * pullbackZ;

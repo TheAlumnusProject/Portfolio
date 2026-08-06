@@ -9,6 +9,7 @@ const people = [
     focus: 'Enthused by everything code, design, and motion. Simply enjoys everything that can be built and shared with others.',
     quote: '"I like building things that feel thoughtful, usable, and hopefully a little bit memorable."',
     color: '#6ee7ff',
+    image: '../assets/images/jeffrey.webp',
     links: [
       { label: 'GitHub', url: 'https://github.com/CornillieJ' },
       { label: 'Presentation', url: 'https://CornillieJ.github.io/Internship-presentation/' },
@@ -20,6 +21,7 @@ const people = [
     focus: 'Interested in systems, logic, and making ambitious ideas reliable enough to grow.',
     quote: '"I enjoy connecting the dots between ideas, structure, and real-world implementation."',
     color: '#ff7ad9',
+    image: '../assets/images/niels.jpg',
     links: [{ label: 'GitHub', url: 'https://github.com/NielsVnb' }],
   },
   {
@@ -28,12 +30,14 @@ const people = [
     focus: 'Enjoys working on things that improve the world, and learning new skills along the way.',
     quote: '"I’m happiest when a project feels both imaginative and intentional."',
     color: '#a855f7',
+    image: '../assets/images/axel.jpg',
     links: [
       { label: 'GitHub', url: 'https://github.com/AxelMaHowest' },
       { label: 'Portfolio', url: 'https://axelmahowest.github.io/portfolio/' },
     ],
   },
 ];
+people.forEach((person) => (person.image = new URL(person.image ?? '', import.meta.url).href));
 </script>
 
 <template>
@@ -41,10 +45,13 @@ const people = [
     <PageIntro eyebrow="People / the team" heading="Meet the team behind this project." description="Three generalists learning, building, and shaping this prototype together." />
 
     <div class="people-list">
-      <GlowCard v-for="(person, idx) in people" :key="person.name" class="person">
+      <GlowCard v-for="person in people" :key="person.name" class="person" :tiltStrength="3">
         <div class="person-row">
-          <div class="person-image">
-            <div class="avatar" :style="{ '--accent-color': person.color }">
+          <div class="person-image in-front">
+            <div v-if="person.image" class="avatar">
+              <img :src="person.image" :alt="person.name" :style="{ '--accent': person.color }" />
+            </div>
+            <div v-else class="avatar" :style="{ '--accent': person.color }">
               {{
                 person.name
                   .split(' ')
@@ -122,16 +129,28 @@ const people = [
 }
 
 .avatar {
+  position: relative;
   display: grid;
   place-items: center;
-  width: 160px;
-  height: 160px;
+  width: 15rem;
+  height: 15rem;
   border-radius: 1.4rem;
   font-size: 3rem;
   font-weight: 700;
   color: #07111f;
-  background: linear-gradient(135deg, var(--accent-color), rgba(255, 255, 255, 0.1));
-  box-shadow: 0 0 40px var(--accent-color, transparent);
+  background: linear-gradient(135deg, var(--accent), rgba(255, 255, 255, 0.1));
+  transition: all 500ms ease;
+}
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  position: absolute;
+}
+.avatar:hover {
+  transform: scale(1.2) translateZ(0.1rem);
+  box-shadow: 0 0 80px black;
 }
 
 .person-content {
@@ -160,7 +179,7 @@ h2 {
 .quote {
   margin-top: 1rem;
   padding: 1rem 1.2rem;
-  border-left: 3px solid var(--accent-color, #6ee7ff);
+  border-left: 3px solid var(--accent, #6ee7ff);
   background: rgba(110, 231, 255, 0.08);
   border-radius: 0.6rem;
   color: #dff8ff;
@@ -169,7 +188,7 @@ h2 {
 }
 .person:nth-child(even) .quote {
   border-left: none;
-  border-right: 3px solid var(--accent-color, #6ee7ff);
+  border-right: 3px solid var(--accent, #6ee7ff);
 }
 
 .links-row {
@@ -211,7 +230,7 @@ h2 {
   }
 
   .person:nth-child(even) .quote {
-    border-left: 3px solid var(--accent-color, #6ee7ff);
+    border-left: 3px solid var(--accent, #6ee7ff);
     border-right: none;
   }
 

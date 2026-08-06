@@ -1,7 +1,9 @@
 :root {
   color-scheme: dark;
-  --bg: #04050b;
-  --bg-secondary: #0a1022;
+  --bg: #000000;
+  --bg2: #010a245d;
+  --bg-radial-color1: rgba(144, 237, 255, 0.203);
+  --bg-radial-color2: rgba(5, 82, 110, 0.438);
   --surface: rgba(8, 13, 28, 0.9);
   --surface-strong: rgba(13, 20, 39, 0.96);
   --text: #f5f8ff;
@@ -9,6 +11,8 @@
   --accent: #6ee7ff;
   --accent2: #ff7ad9;
   --accent3: #8b5cf6;
+  --accent-weak: rgba(110, 231, 255, 0.12);
+  --accent-ghost: rgba(110, 231, 255, 0.06);
 }
 
 *,
@@ -21,7 +25,7 @@
 body {
   min-height: 100vh;
   color: var(--text);
-  background: radial-gradient(circle at top left, rgba(110, 231, 255, 0.12), transparent 28%), radial-gradient(circle at bottom right, rgba(255, 122, 217, 0.16), transparent 28%), linear-gradient(135deg, var(--bg) 0%, var(--bg-secondary) 100%);
+  background: radial-gradient(circle at top left, var(--bg-radial-color1), transparent 28%), radial-gradient(circle at bottom right, var(--bg-radial-color2), transparent 28%), linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
   background-attachment: fixed;
   line-height: 1.6;
   font-family:

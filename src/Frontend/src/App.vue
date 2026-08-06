@@ -2,6 +2,7 @@
 import { RouterView } from 'vue-router';
 import { onMounted, onUnmounted } from 'vue';
 import NavBar from '@/components/layout/NavBar.vue';
+import BackgroundEffect from '@/components/layout/BackgroundEffect.vue';
 import { useTheme } from '@/composables/useTheme';
 
 // Initialize theme
@@ -30,6 +31,7 @@ onUnmounted(() => {
 </script>
 
 <template>
+  <BackgroundEffect />
   <div class="app-shell">
     <NavBar />
     <main class="page-content">

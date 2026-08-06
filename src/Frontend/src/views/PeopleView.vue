@@ -2,6 +2,10 @@
 import GlowCard from '@/components/GlowCard.vue';
 import PageIntro from '@/components/PageIntro.vue';
 
+import jeffreyImage from '@/assets/images/jeffrey.webp';
+import nielsImage from '@/assets/images/niels.jpg';
+import axelImage from '@/assets/images/axel.jpg';
+
 const people = [
   {
     name: 'Jeffrey Cornillie',
@@ -9,7 +13,7 @@ const people = [
     focus: 'Enthused by everything code, design, and motion. Simply enjoys everything that can be built and shared with others.',
     quote: '"I like building things that feel thoughtful, usable, and hopefully a little bit memorable."',
     color: '#6ee7ff',
-    image: '../assets/images/jeffrey.webp',
+    image: jeffreyImage,
     links: [
       { label: 'GitHub', url: 'https://github.com/CornillieJ' },
       { label: 'Presentation', url: 'https://CornillieJ.github.io/Internship-presentation/' },
@@ -21,7 +25,7 @@ const people = [
     focus: 'Interested in systems, logic, and making ambitious ideas reliable enough to grow.',
     quote: '"I enjoy connecting the dots between ideas, structure, and real-world implementation."',
     color: '#ff7ad9',
-    image: '../assets/images/niels.jpg',
+    image: nielsImage,
     links: [{ label: 'GitHub', url: 'https://github.com/NielsVnb' }],
   },
   {
@@ -30,7 +34,7 @@ const people = [
     focus: 'Enjoys working on things that improve the world, and learning new skills along the way.',
     quote: '"I’m happiest when a project feels both imaginative and intentional."',
     color: '#a855f7',
-    image: '../assets/images/axel.jpg',
+    image: axelImage,
     links: [
       { label: 'GitHub', url: 'https://github.com/AxelMaHowest' },
       { label: 'Portfolio', url: 'https://axelmahowest.github.io/portfolio/' },

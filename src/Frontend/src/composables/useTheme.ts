@@ -1,6 +1,6 @@
 import { ref, watch, onMounted } from 'vue';
 
-export type ThemeName = 'blue' | 'monochrome' | 'matrix';
+export type ThemeName = 'blue' | 'monochrome' | 'matrix' | 'persona';
 
 interface Theme {
   name: ThemeName;
@@ -81,7 +81,32 @@ const themes: Record<ThemeName, Theme> = {
       accentWeak: 'rgba(0, 255, 0, 0.08)',
       accentGhost: 'rgba(0, 255, 0, 0.04)',
     },
-    backgroundEffect: 'matrix-rain', // Custom effect for the matrix theme
+    backgroundEffect: 'matrix-rain',
+  },
+  persona: {
+    name: 'persona',
+    label: 'Persona 5',
+    colors: {
+      bg: '#d92323',
+      bg2: '#0d0d0d',
+      bgRadialColor1: '#0d0d0d',
+      bgRadialColor2: '#0d0d0d',
+
+      surface: '#0d0d0d',
+      surfaceStrong: '#0d0d0d',
+
+      text: '#ffffff',
+      muted: '#ffffff',
+
+      accent: '#d92323',
+      accent2: '#ffffff',
+      accent3: '#732424',
+
+      accentWeak: 'rgba(0, 0, 0, 0.22)',
+      accentGhost: 'rgba(255, 255, 255, 0.4)',
+    },
+
+    backgroundEffect: 'persona-stars',
   },
 };
 const firstTheme = Object.keys(themes)[0] as ThemeName;
@@ -95,14 +120,12 @@ const applyTheme = (themeName: ThemeName) => {
     clearStyle(root);
     currentTheme.value = firstTheme;
     localStorage.removeItem('theme');
-  }
-  else{
+  } else {
     const theme = themes[themeName];
     setStyle(root, theme);
     currentTheme.value = themeName;
     localStorage.setItem('theme', themeName);
   }
-
 };
 
 const toggleTheme = () => {

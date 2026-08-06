@@ -280,7 +280,7 @@ const filteredFeatured = () => {
   background: linear-gradient(135deg, var(--accent), var(--accent-weak));
   border: none;
   border-radius: 0.6rem;
-  color: var(--bg);
+  color: var(--text);
   font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;

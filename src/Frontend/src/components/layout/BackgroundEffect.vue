@@ -2,7 +2,7 @@
 import { useTheme } from '@/composables/useTheme';
 import { ref, watch } from 'vue';
 import Matrix from '@/components/three/Matrix.vue';
-
+import PersonaStars from '@/components/PersonaStars.vue';
 const { currentTheme, themes } = useTheme();
 
 let effect = ref<string | undefined>(undefined);
@@ -20,6 +20,7 @@ const ThemeToFollow = watch(currentTheme, (newTheme) => {
 <template>
   <div class="background">
     <Matrix v-if="effect === 'matrix-rain'" />
+    <PersonaStars v-if="effect === 'persona-stars'" />
   </div>
 </template>
 
@@ -30,7 +31,7 @@ const ThemeToFollow = watch(currentTheme, (newTheme) => {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -1;
+  z-index: -5;
   overflow: hidden;
 }
 </style>

@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import ShowcaseView from '../views/ShowcaseView.vue';
 import UtilityHubView from '../views/UtilityHubView.vue';
@@ -8,7 +8,7 @@ import ContactView from '../views/ContactView.vue';
 import StarWarsView from '../views/cases/StarWarsView.vue';
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(),
   routes: [
     {
       path: '/',

@@ -7,7 +7,9 @@ interface Theme {
   label: string;
   colors: {
     bg: string;
-    bgSecondary: string;
+    bg2: string;
+    bgRadialColor1: string;
+    bgRadialColor2: string;
     surface: string;
     surfaceStrong: string;
     text: string;
@@ -18,6 +20,8 @@ interface Theme {
     accentWeak?: string;
     accentGhost?: string;
   };
+  backgroundImage?: string;
+  backgroundEffect?: string;
 }
 
 const themes: Record<ThemeName, Theme> = {
@@ -26,7 +30,9 @@ const themes: Record<ThemeName, Theme> = {
     label: 'Blue',
     colors: {
       bg: '#04050b',
-      bgSecondary: '#0a1022',
+      bg2: '#0a1022',
+      bgRadialColor1: 'rgba(110, 231, 255, 0.12)',
+      bgRadialColor2: 'rgba(255, 122, 217, 0.16)',
       surface: 'rgba(8, 13, 28, 0.9)',
       surfaceStrong: 'rgba(13, 20, 39, 0.96)',
       text: '#f5f8ff',
@@ -43,7 +49,9 @@ const themes: Record<ThemeName, Theme> = {
     label: 'Monochrome',
     colors: {
       bg: '#0a0a0a',
-      bgSecondary: '#141414',
+      bg2: '#141414',
+      bgRadialColor1: 'rgba(0, 0, 0, 0.12)',
+      bgRadialColor2: 'rgba(255, 255, 255, 0.6)',
       surface: 'rgba(15, 15, 15, 0.9)',
       surfaceStrong: 'rgba(20, 20, 20, 0.96)',
       text: '#f0f0f0',
@@ -60,7 +68,9 @@ const themes: Record<ThemeName, Theme> = {
     label: 'Matrix',
     colors: {
       bg: '#0a0a0a',
-      bgSecondary: '#141414',
+      bg2: '#141414',
+      bgRadialColor1: 'rgba(0, 0, 0, 0.12)',
+      bgRadialColor2: 'rgba(122, 255, 146, 0.16)',
       surface: 'rgba(15, 15, 15, 0.9)',
       surfaceStrong: 'rgba(20, 20, 20, 0.96)',
       text: '#00ff00',
@@ -71,27 +81,36 @@ const themes: Record<ThemeName, Theme> = {
       accentWeak: 'rgba(0, 255, 0, 0.08)',
       accentGhost: 'rgba(0, 255, 0, 0.04)',
     },
+    backgroundEffect: 'matrix-rain', // Custom effect for the matrix theme
   },
 };
+const firstTheme = Object.keys(themes)[0] as ThemeName;
 
 const currentTheme = ref<ThemeName>('blue');
 
 const applyTheme = (themeName: ThemeName) => {
-  const theme = themes[themeName];
   const root = document.documentElement;
 
-  Object.entries(theme.colors).forEach(([key, value]) => {
-    const cssVar = `--${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
-    root.style.setProperty(cssVar, value);
-  });
+  if (themeName === firstTheme) {
+    clearStyle(root);
+    currentTheme.value = firstTheme;
+    localStorage.removeItem('theme');
+  }
+  else{
+    const theme = themes[themeName];
+    setStyle(root, theme);
+    currentTheme.value = themeName;
+    localStorage.setItem('theme', themeName);
+  }
 
-  currentTheme.value = themeName;
-  localStorage.setItem('theme', themeName);
 };
 
 const toggleTheme = () => {
-  const nextTheme = currentTheme.value === 'blue' ? 'monochrome' : currentTheme.value === 'monochrome' ? 'matrix' : 'blue';
-  applyTheme(nextTheme);
+  const allThemes = Object.keys(themes) as ThemeName[];
+  const currentIndex = allThemes.indexOf(currentTheme.value);
+  const nextIndex = (currentIndex + 1) % allThemes.length;
+  const nextTheme = allThemes[nextIndex];
+  if (nextTheme) applyTheme(nextTheme);
 };
 
 const initTheme = () => {
@@ -100,6 +119,19 @@ const initTheme = () => {
     applyTheme(savedTheme);
   }
 };
+
+const clearStyle = (root: HTMLElement) => {
+  Object.keys(themes[firstTheme].colors).forEach((key) => {
+    root.style.removeProperty(toCssVarName(key));
+  });
+};
+const setStyle = (root: HTMLElement, theme: Theme) => {
+  Object.entries(theme.colors).forEach(([key, value]) => {
+    root.style.setProperty(toCssVarName(key), value);
+  });
+};
+
+const toCssVarName = (key: string) => `--${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`;
 
 export const useTheme = () => {
   onMounted(() => {

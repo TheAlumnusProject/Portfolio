@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 
+interface Props {
+  tiltStrength?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  tiltStrength: 10,
+});
+
 const cardStyle = ref<Record<string, string>>({
   '--tilt-x': '0deg',
   '--tilt-y': '0deg',
@@ -15,8 +23,8 @@ const handleMouseMove = (event: MouseEvent) => {
   const y = ((event.clientY - bounds.top) / bounds.height) * 100;
   // const rotateY = ((x - 50) / 50) * 10;
   // const rotateX = ((50 - y) / 50) * 10;
-  const rotateY = ((50 - x) / 50) * 10;
-  const rotateX = ((y - 50) / 50) * 10;
+  const rotateY = ((50 - x) / 50) * props.tiltStrength;
+  const rotateX = ((y - 50) / 50) * props.tiltStrength;
 
   cardStyle.value = {
     '--tilt-x': `${rotateX.toFixed(2)}deg`,

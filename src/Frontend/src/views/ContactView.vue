@@ -8,7 +8,7 @@ import PageIntro from '@/components/PageIntro.vue';
     <PageIntro eyebrow="Contact / start a conversation" heading="Let the project grow through thoughtful feedback and ideas." description="Whether you want to talk about the visual direction or the roadmap, this space is ready for the next step." />
 
     <div class="card-grid">
-      <GlowCard>
+      <GlowCard :tiltStrength="3">
         <h2>Drop a note</h2>
         <form class="contact-form">
           <input type="text" placeholder="Your name" />
@@ -18,7 +18,7 @@ import PageIntro from '@/components/PageIntro.vue';
         </form>
       </GlowCard>
 
-      <GlowCard>
+      <GlowCard :tiltStrength="3">
         <h2>Reach out to the team</h2>
         <div class="contact-list">
           <span>GitHub</span>

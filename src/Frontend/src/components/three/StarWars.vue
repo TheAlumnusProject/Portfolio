@@ -9,7 +9,7 @@ interface Props {
   textContent: string[];
   positions: number[];
   showSpaceship: boolean;
-  speed: number;
+  speed: number | string;
 }
 const props = withDefaults(defineProps<Props>(), {
   textContent: () => ['The Alumnus Project', 'A collaborative effort', 'by', 'Cornillie Jeffrey', 'Vannieuwenborgh Niels', 'Martens Axel', 'Enjoy the journey through our work!'],
@@ -58,7 +58,7 @@ async function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
   texts.forEach((text) => {
-    HELPERS.updateStarwarsText(text, props.speed);
+    HELPERS.updateStarwarsText(text, Number(props.speed));
   });
   if (!props.showSpaceship){
     if(spaceship) {

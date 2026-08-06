@@ -30,7 +30,7 @@ export async function createStarwarsTexts(content: string[], positions: number[]
 export function createText(content: string, color: number): Text {
   const text = new Text();
   text.text = content;
-  text.font = '/fonts/starwars.ttf';
+  text.font = `${import.meta.env.BASE_URL}fonts/starwars.ttf`;
   text.fontSize = 40;
   text.color = color;
 
@@ -73,7 +73,7 @@ export function updateStarwarsText(text: THREE.Mesh, speed: number): void {
 }
 export function AddSpaceship(scene: THREE.Scene, gltfLoader: GLTFLoader): Promise<THREE.Object3D> {
   return new Promise((resolve) => {
-    gltfLoader.load('/3d/x-wing.glb', (gltf) => {
+    gltfLoader.load(`${import.meta.env.BASE_URL}3d/x-wing.glb`, (gltf) => {
       const spaceship = gltf.scene;
       spaceship.scale.set(0.5, 0.5, 0.5);
       spaceship.position.set(0, 10, 100);
@@ -109,7 +109,6 @@ export function animateSpaceship(scene: THREE.Scene, spaceship: THREE.Object3D):
   if (Math.cos(time) > -0.4 && Math.cos(time) < 0) {
     z += (Math.cos(time) + 0.4) * pullbackZ;
   }
-  console.log(Math.cos(time));
   if (shouldBeVisible && Math.cos(time) > -0.1 && Math.cos(time) < 0.3) {
     addTrail(spaceship, scene);
   }

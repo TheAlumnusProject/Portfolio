@@ -16,12 +16,15 @@
   },
   "dependencies": {
     "pinia": "^3.0.4",
+    "three": "^0.185.1",
+    "troika-three-text": "^0.52.5",
     "vue": "^3.5.38",
     "vue-router": "^5.1.0"
   },
   "devDependencies": {
     "@tsconfig/node24": "^24.0.4",
     "@types/node": "^24.13.2",
+    "@types/three": "^0.185.4",
     "@vitejs/plugin-vue": "^6.0.7",
     "@vue/eslint-config-typescript": "^14.8.0",
     "@vue/tsconfig": "^0.9.1",

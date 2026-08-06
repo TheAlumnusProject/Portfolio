@@ -1,13 +1,16 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRoute } from 'vue-router';
 import { ref } from 'vue';
 import { useTheme } from '@/composables/useTheme';
+import type { ThemeName } from '@/composables/useTheme';
+
+const route = useRoute();
 
 const { currentTheme, toggleTheme, applyTheme, themes } = useTheme();
 const showThemeMenu = ref(false);
 
 const selectTheme = (name: string) => {
-  applyTheme(name as any);
+  applyTheme(name as ThemeName);
   showThemeMenu.value = false;
 };
 
@@ -19,6 +22,14 @@ const links = [
   { label: 'People', to: '/people' },
   { label: 'Contact', to: '/contact' },
 ];
+
+const activeLink = (linkTo: string) => {
+  if (linkTo === '/') {
+    return route.path === linkTo;
+  }
+  return route.path.startsWith(linkTo);
+};
+
 const width = links.length * 6.5 + 1.5; // 6.5rem per link + 1.5rem padding
 
 const HandleClick = () => {
@@ -55,7 +66,7 @@ const HandleClick = () => {
       </div>
 
       <div class="nav-links">
-        <RouterLink v-for="link in links" :key="link.to" :to="link.to" class="nav-link">
+        <RouterLink v-for="link in links" :key="link.to" :to="link.to" class="nav-link" :class="{ 'router-link-active': activeLink(link.to) }">
           {{ link.label }}
         </RouterLink>
       </div>

@@ -5,6 +5,18 @@ import { ref } from 'vue';
 import * as THREE from 'three';
 import * as HELPERS from '@/helpers/three-helpers.ts';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+interface Props {
+  textContent: string[];
+  positions: number[];
+  showSpaceship: boolean;
+  speed: number;
+}
+const props = withDefaults(defineProps<Props>(), {
+  textContent: () => ['The Alumnus Project', 'A collaborative effort', 'by', 'Cornillie Jeffrey', 'Vannieuwenborgh Niels', 'Martens Axel', 'Enjoy the journey through our work!'],
+  positions: () => [100, 250, 300, 350, 400, 450, 550],
+  showSpaceship: () => true,
+  speed: () => 1,
+});
 
 let canvas = ref<HTMLCanvasElement | null>(null);
 let scene: THREE.Scene;
@@ -34,8 +46,8 @@ async function initializeThreeJs(): Promise<void> {
   HELPERS.addStarfield(scene, 1000, 0xffffff, 0.1);
 
   // Add text
-  const textContent = ['The Alumnus Project', 'A collaborative effort', 'by', 'Cornillie Jeffrey', 'Vannieuwenborgh Niels', 'Martens Axel', 'Enjoy the journey through our work!'];
-  const positions = [100, 250, 300, 350, 400, 450, 550];
+  const textContent = props.textContent;
+  const positions = props.positions;
   texts = await HELPERS.createStarwarsTexts(textContent, positions, 0xffff00);
   texts.forEach((text) => {
     scene.add(text);
@@ -46,8 +58,16 @@ async function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
   texts.forEach((text) => {
-    HELPERS.updateStarwarsText(text);
+    HELPERS.updateStarwarsText(text, props.speed);
   });
+  if (!props.showSpaceship){
+    if(spaceship) {
+      scene.remove(spaceship);
+      spaceship = null;
+      spaceshipSpawned = false;
+    }
+    return;
+  }
   if (!spaceshipSpawned && texts.length > 0 && (texts[0]?.position.z || 0) < -50) {
     spaceshipSpawned = true;
     spaceship = await HELPERS.AddSpaceship(scene, gltfLoader);

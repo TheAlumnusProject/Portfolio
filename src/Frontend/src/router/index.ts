@@ -5,6 +5,7 @@ import UtilityHubView from '../views/UtilityHubView.vue';
 import AIStudioView from '../views/AIStudioView.vue';
 import PeopleView from '../views/PeopleView.vue';
 import ContactView from '../views/ContactView.vue';
+import StarWarsView from '../views/cases/StarWarsView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +39,11 @@ const router = createRouter({
       path: '/contact',
       name: 'contact',
       component: ContactView,
+    },
+    {
+      path: '/showcase/starwars',
+      name: 'starwars',
+      component: StarWarsView,
     },
     {
       path: '/:pathMatch(.*)*',

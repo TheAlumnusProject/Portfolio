@@ -59,9 +59,9 @@ export function addStarfield(scene: THREE.Scene, count: number, color: number, s
   scene.add(starField);
 }
 
-export function updateStarwarsText(text: THREE.Mesh): void {
-  text.position.y += 0.15;
-  text.position.z -= 0.6;
+export function updateStarwarsText(text: THREE.Mesh, speed: number): void {
+  text.position.y += 0.15 * speed;
+  text.position.z -= 0.6 * speed;
   // update opacity based on distance from camera
   const distance = text.position.distanceTo(new THREE.Vector3(0, 0, 0));
   const maxDistance = 2000;

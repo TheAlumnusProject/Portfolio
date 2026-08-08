@@ -11,9 +11,7 @@ const ThemeToFollow = watch(currentTheme, (newTheme) => {
   console.log('Theme changed to:', newTheme);
   const activeTheme = themes.find((theme) => theme.name === newTheme);
   effect.value = activeTheme?.backgroundEffect;
-  if (effect.value == 'matrix-rain') {
-    console.log('Matrix rain effect activated');
-  }
+    console.log('Theme changed, effect set to:', effect.value);
 });
 </script>
 

@@ -19,6 +19,8 @@ interface ShowcaseItem {
   tags: string[];
   featured?: boolean;
 }
+const allCategories = ['3D & WebGL', 'Games & Interactive', 'Media & Demonstrations', 'External Projects'];
+const allTags = ['Three.js', 'WebGL', '3D', 'Animation', 'Visual', 'Gallery', 'VR', 'Interactive', 'Procedural Generation', 'Gaming', 'JavaScript', 'Open Source', 'Video'];
 
 const showcaseItems = reactive<ShowcaseItem[]>([
   // 3D & WebGL Section
@@ -31,6 +33,17 @@ const showcaseItems = reactive<ShowcaseItem[]>([
     type: 'internal',
     route: '/showcase/starwars',
     tags: ['Three.js', 'WebGL', '3D', 'Animation'],
+    featured: true,
+  },
+  {
+    id: 'image-helix',
+    title: 'Image Helix Viewer',
+    description: 'A 3D helix layout for displaying images in a visually engaging manner.',
+    icon: 'helix',
+    category: 'Media & Demonstrations, 3D & WebGL',
+    type: 'internal',
+    route: '/showcase/helix',
+    tags: ['Visual', 'WebGL', '3D', 'Gallery'],
     featured: true,
   },
   {

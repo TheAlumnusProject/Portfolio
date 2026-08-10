@@ -17,9 +17,14 @@ onMounted(() => {
     requestAnimationFrame(frame);
     const defaultSpeed = speed.value;
     speed.value = 1;
-    setTimeout(() => {
-        speed.value = defaultSpeed;
-    }, 500);
+    const interval = setInterval(() => {
+        const step = (speed.value - defaultSpeed) * 0.1;
+        speed.value -= step;
+        if (speed.value <= defaultSpeed || step < 0.001) {
+            speed.value = defaultSpeed;
+            clearInterval(interval);
+        }
+    }, 100);
 });
 
 
@@ -217,6 +222,11 @@ function depthFilter(depth: number): string{
             <span>Scroll to rotate</span>
             <span class="arrow-down">↓</span>
         </div>
+        <div class="drag-tip">
+            <span class="arrow-left">←</span>
+            <span>Drag to rotate</span>
+            <span class="arrow-right">→</span>
+        </div>
     </div>
 </template>
 
@@ -251,6 +261,8 @@ function depthFilter(depth: number): string{
 }
 .helix-item{
     position: absolute;
+    top: 50%;
+    left: 50%;
     width: 200px;
     border-radius: 10px;
     overflow: hidden;
@@ -289,6 +301,35 @@ function depthFilter(depth: number): string{
         0 0 20px #000;
     animation: bounce 2s infinite;
 }
+.drag-tip {
+    z-index: 5;
+    position: fixed;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: fit-content;
+    font-size: 1.2rem;
+    text-shadow:
+        0 0 2px #000,
+        0 0 10px #000,
+        0 0 20px #000;
+}
+.drag-tip span{
+    text-align: center;
+    width: fit-content;
+}
+.drag-tip .arrow-left {
+    position: absolute;
+    left: -50%;
+    width: fit-content;
+    animation: bounce-horizontal-1 2s infinite;
+}
+.drag-tip .arrow-right {
+    position: absolute;
+    right: -50%;
+    width: fit-content;
+    animation: bounce-horizontal-2 2s infinite;
+}
 .selected-image{
     display: none;
     transition: opacity 0.3s ease;
@@ -323,6 +364,22 @@ function depthFilter(depth: number): string{
     }
     50% {
         transform: translateY(-50%) translateY(-10px);
+    }
+}
+@keyframes bounce-horizontal-1 {
+    0%, 100% {
+        transform: translateX(-50%) translateX(0);
+    }
+    50% {
+        transform: translateX(-50%) translateX(-10px);
+    }
+}
+@keyframes bounce-horizontal-2 {
+    0%, 100% {
+        transform: translateX(50%) translateX(0);
+    }
+    50% {
+        transform: translateX(50%) translateX(10px);
     }
 }
 @keyframes popIn {

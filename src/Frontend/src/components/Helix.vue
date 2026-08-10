@@ -158,7 +158,7 @@ function helixTransform(index: number, reverse: boolean = false): string {
     return `
         translate(-50%, -50%)
         rotateY(${angle.toFixed(4)}rad)
-        translateZ(${radius.value}vw)
+        translateZ(${radius.value}vmax)
         translateY(${translateY.toFixed(1)}vh)
     `;
 }
@@ -247,39 +247,39 @@ function depthFilter(depth: number): string{
     background: transparent;
 }
 .screen {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    position: fixed;
+    inset: 0;
+    width: 100dvw;
+    height: 100dvh;
     overflow: hidden;
     user-select: none;
     -webkit-user-drag: none;
-    -khtml-user-drag: none;
-    -moz-user-drag: none;
-    -o-user-drag: none;
+    touch-action: none;
 }
+
 .helix-container {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
-    width: 100vw;
-    height: 100vh;
+    width: 100dvw;
+    height: 100dvh;
     display: flex;
     justify-content: center;
     perspective: 800px;
-	perspective-origin: 50% 50%;
+    perspective-origin: 50% 50%;
+    touch-action: none;
 }
-.helix-item{
+.helix-item {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 200px;
-    border-radius: 10px;
+    width: clamp(110px, 14vw, 200px);
+    border-radius: clamp(6px, 0.7vw, 10px);
     overflow: hidden;
     margin: 0;
     padding: 0;
+
+    touch-action: none;
 }
 .helix-image {
     margin: 0;
@@ -289,13 +289,30 @@ function depthFilter(depth: number): string{
     pointer-events: none;
 }
 .controls {
-    position: absolute;
+    position: fixed;
     top: 50%;
-    left: 2%;
+    left: clamp(10px, 2vw, 30px);
+
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+
     z-index: 5;
+    transform: translateY(-50%);
+}
+
+.separation-container {
+    margin: 0;
+    padding: 0.75rem 1rem;
+
+    max-width: min(220px, 25vw);
+
+    backdrop-filter: blur(8px);
+    border-radius: 8px;
+}
+
+.separation-container h4 {
+    margin: 0 0 0.25rem;
 }
 .scroll-tip {
     z-index: 5;
@@ -350,11 +367,16 @@ function depthFilter(depth: number): string{
     position: fixed;
     top: 50%;
     left: 50%;
+
     transform: translate(-50%, -50%);
-    max-width: 80vw;
-    max-height: 80vh;
+
+    max-width: 90dvw;
+    max-height: 85dvh;
+
     z-index: 1000;
+
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+
     animation: popIn 0.3s ease-out;
 }
 .overlay {
@@ -402,6 +424,80 @@ function depthFilter(depth: number): string{
     100% {
         transform: translate(-50%, -50%) scale(1);
         opacity: 1;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .controls {
+        top: auto;
+        bottom: max(10px, env(safe-area-inset-bottom));
+        left: 50%;
+        transform: translateX(-50%);
+
+        width: min(90vw, 420px);
+    }
+
+    .separation-container {
+        width: 100%;
+        max-width: none;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem 1rem;
+
+        box-sizing: border-box;
+    }
+
+    .separation-container legend {
+        grid-column: 1 / -1;
+    }
+
+    .speed-controls,
+    .toggle-controls,
+    .zoom-controls,
+    .radius-controls {
+        min-width: 0;
+    }
+
+    .separation-container input[type="range"] {
+        width: 100%;
+    }
+}
+@media (max-width: 768px) {
+    .scroll-tip {
+        top: 15%;
+        right: 50%;
+        transform: translateX(50%);
+
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+
+    .drag-tip {
+        bottom: 24%;
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+}
+@media (max-width: 480px) {
+    .scroll-tip {
+        top: 12%;
+        font-size: 0.8rem;
+    }
+
+    .drag-tip {
+        bottom: 27%;
+        font-size: 0.8rem;
+    }
+
+    .controls {
+        width: 94vw;
+    }
+
+    .separation-container {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.85rem;
     }
 }
 </style>

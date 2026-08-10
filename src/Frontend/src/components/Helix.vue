@@ -77,65 +77,91 @@ const frame = (now: number): void => {
 //#endregion
 
 //#region Event Listeners
+
+// Mouse wheel
 window.addEventListener('wheel', (e) => {
     e.preventDefault();
-    if(e.deltaY < 0)
-        elapsed.value -= speed.value * 0.2;
-    else 
-        elapsed.value += speed.value * 0.2;
-});
 
-window.addEventListener('pointerup', ()=>{
-    isDragging = false;
-    setTimeout(()=>{
-        wasDragging = false;
-    }, 200);
-});
-window.addEventListener('pointerleave', ()=>{
-    isDragging = false;
-    wasDragging = false;
-});
+    elapsed.value += Math.sign(e.deltaY) * speed.value * 0.2;
+}, { passive: false });
+
+
+// Pointer pressed
 window.addEventListener('pointerdown', (e) => {
     lastX = e.clientX;
     isDragging = true;
+    wasDragging = false;
 });
 
-window.addEventListener('mousemove', (e) => {
+
+// Pointer moved
+window.addEventListener('pointermove', (e) => {
     if (!isDragging) return;
-    wasDragging = true;
+
     const deltaX = e.clientX - lastX;
+
     if (Math.abs(deltaX) < minDragDistance) return;
+
+    wasDragging = true;
+
     e.preventDefault();
+
     elapsed.value += Math.sign(deltaX) * speed.value * 0.1;
+
     lastX = e.clientX;
+}, { passive: false });
+
+
+// Pointer released
+window.addEventListener('pointerup', () => {
+    isDragging = false;
+
+    setTimeout(() => {
+        wasDragging = false;
+    }, 200);
 });
 
 
-function onImageClick(e : MouseEvent,index: number){
-    if(isDragging || wasDragging) return;
+// Pointer leaves the window
+window.addEventListener('pointerleave', () => {
+    isDragging = false;
+    wasDragging = false;
+});
+
+
+function onImageClick(e: MouseEvent, index: number) {
+    if (isDragging || wasDragging) return;
+
     e.stopPropagation();
-    // console.log('depthOf(index)', depthOf(index));
-    if(depthOf(index) < 0.91) return;
+
+    if (depthOf(index) < 0.91) return;
 
     selectedElement.value = e.target as HTMLElement;
     selectedElement.value.classList.add('selected-image');
+
     savedAutoSpin = autoSpin.value;
     autoSpin.value = false;
+
     selectedImage.value = images.value[index];
+
     const overlay = document.querySelector('.overlay') as HTMLElement;
     overlay.classList.remove('hidden');
 }
 
-function closeOverlay(){
+
+function closeOverlay() {
     autoSpin.value = savedAutoSpin;
     selectedImage.value = undefined;
+
     if (selectedElement.value) {
         selectedElement.value.classList.remove('selected-image');
         selectedElement.value = null;
     }
+
     const overlay = document.querySelector('.overlay') as HTMLElement;
     overlay.classList.add('hidden');
 }
+
 //#endregion
 
 

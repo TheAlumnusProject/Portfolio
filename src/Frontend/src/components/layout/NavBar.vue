@@ -137,8 +137,8 @@ onMounted(() => {
   background: var(--surface-strong);
   box-shadow: 0 20px 70px rgba(0, 0, 0, 0.45);
   transition:
-    all 500ms ease,
-    width 500ms ease 500ms;
+    all 1000ms ease
+    width 500ms ease 1000ms;
   overflow: hidden;
 }
 
@@ -195,7 +195,7 @@ onMounted(() => {
   gap: 0.5rem;
   flex-wrap: wrap;
   transition:
-    height 500ms ease,
+    all 500ms ease,
     width 500ms ease 500ms;
   width: 100%;
   height: 2.4rem;
@@ -245,7 +245,8 @@ onMounted(() => {
 /* Collapsed state */
 .collapsed-nav .nav-bar {
   gap: 0;
-  width: 20rem !important;
+  width: 20rem;
+  background: transparent;
 }
 
 .collapsed-nav .nav-links {
@@ -333,9 +334,10 @@ onMounted(() => {
 
 @media (max-width: 900px) {
   .nav-bar {
-    right: 0.75rem;
+    right: 5rem;
     padding: 0.85rem 1rem;
     gap: 0.75rem;
+    transition: all 500ms ease;
   }
 
   .brand {
@@ -359,12 +361,14 @@ onMounted(() => {
     gap: 0.35rem;
     min-height: 2.15rem;
     height: auto;
+    transition: all 500ms ease;
   }
 
   .nav-link {
     height: 2.15rem;
     padding: 0.55rem 0.75rem;
     font-size: 0.85rem;
+    transition: all 300ms ease !important;
   }
 
   .theme-toggle {
@@ -378,17 +382,16 @@ onMounted(() => {
   }
   .collapsed-nav .nav-bar {
   gap: 0;
-  width: auto !important;
 }
 }
 
 @media (max-width: 640px) {
   .nav-bar {
-    right: 0.5rem;
+    right: 5rem;
     left: auto;
     padding: 0.7rem 0.85rem;
     gap: 0.6rem;
-    max-width: calc(100vw - 1rem);
+    max-width: calc(30vw - 1rem);
   }
 
   .brand {
@@ -423,7 +426,8 @@ onMounted(() => {
   }
 
   .collapsed-nav .nav-bar {
-    width: auto !important;
+    background: transparent;
+    /* width: fit-content !important; */
   }
 
   .theme-toggle {
@@ -459,7 +463,6 @@ onMounted(() => {
     padding: 0.6rem 0.7rem;
   }
 
-  /* Hide brand text on very small screens to prevent overflow */
   .brand-text {
     display: none;
   }
@@ -481,8 +484,7 @@ onMounted(() => {
   }
 
   .collapsed-nav .nav-bar {
-    width: auto !important;
-    padding: 0.55rem;
+    transition: all 500ms ease;
   }
 }
 </style>

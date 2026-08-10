@@ -6,6 +6,7 @@ import AIStudioView from '../views/AIStudioView.vue';
 import PeopleView from '../views/PeopleView.vue';
 import ContactView from '../views/ContactView.vue';
 import StarWarsView from '../views/cases/StarWarsView.vue';
+import ImageHelixView from '../views/cases/ImageHelixView.vue';
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -44,6 +45,11 @@ const router = createRouter({
       path: '/showcase/starwars',
       name: 'starwars',
       component: StarWarsView,
+    },
+    {
+      path: '/showcase/helix',
+      name: 'image-helix',
+      component: ImageHelixView,
     },
     {
       path: '/:pathMatch(.*)*',

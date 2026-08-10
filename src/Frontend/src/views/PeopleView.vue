@@ -250,9 +250,11 @@ h2 {
   .person {
     padding: 1rem 2rem;
     flex-direction: column;
+    max-width: 90vw;
   }
   .person-row{
     grid-template-columns: 1fr !important;
+    max-width: 90vw;
   }
 }
 </style>

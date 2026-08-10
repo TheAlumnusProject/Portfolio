@@ -17,6 +17,7 @@ const imageUrls = ref([
 ]);
 
 const inputText = ref(imageUrls.value.join('\n'));
+
 const rerender = () => {
     console.log('Rerendering with new image URLs:', inputText.value);
     imageUrls.value = inputText.value.split('\n').filter(url => url.trim() !== '');
@@ -56,12 +57,18 @@ const rerender = () => {
     resize: none;
     height: 15vh;
 }
-.text-controls button {
+button {
     margin-top: 0.5rem;
     padding: 0.5rem 1rem;
     border-radius: 4px;
     background-color: var(--bg2);
     color: var(--text);
     cursor: pointer;
+    border-radius: 0.5rem;
+}
+@media (max-width: 768px) {
+    .text-controls{
+        display: none;
+    }
 }
 </style>

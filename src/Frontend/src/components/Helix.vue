@@ -11,9 +11,6 @@ const props = withDefaults(defineProps<Props>(), {
 
 
 onMounted(() => {
-    while (images.value.length < 200) {
-        images.value.push(...props.images);
-    }
     requestAnimationFrame(frame);
     const defaultSpeed = speed.value;
     speed.value = 1;
@@ -29,7 +26,6 @@ onMounted(() => {
 
 
 //#region State
-const images = ref<string[]>([]);
 const selectedImage = ref<string | undefined>(undefined);
 const selectedElement = ref<HTMLElement | null>(null);
 const radius = ref(13);
@@ -50,6 +46,13 @@ let savedAutoSpin = autoSpin.value;
 //#endregion
 
 //#region Computed Properties
+const images = computed(() => {
+    const result: string[] = [];
+    while (result.length < 200) {
+        result.push(...props.images);
+    }
+    return result;
+});
 const imagesPerTurn = computed(()=>{
     return radius.value;
 })
@@ -79,23 +82,19 @@ const frame = (now: number): void => {
 //#region Event Listeners
 
 // Mouse wheel
-window.addEventListener('wheel', (e) => {
+function onWheel(e: WheelEvent) {
     e.preventDefault();
 
     elapsed.value += Math.sign(e.deltaY) * speed.value * 0.2;
-}, { passive: false });
+}
 
-
-// Pointer pressed
-window.addEventListener('pointerdown', (e) => {
+function onPointerDown(e: PointerEvent) {
     lastX = e.clientX;
     isDragging = true;
     wasDragging = false;
-});
+}
 
-
-// Pointer moved
-window.addEventListener('pointermove', (e) => {
+function onPointerMove(e: PointerEvent) {
     if (!isDragging) return;
 
     const deltaX = e.clientX - lastX;
@@ -103,31 +102,19 @@ window.addEventListener('pointermove', (e) => {
     if (Math.abs(deltaX) < minDragDistance) return;
 
     wasDragging = true;
-
     e.preventDefault();
 
     elapsed.value += Math.sign(deltaX) * speed.value * 0.1;
-
     lastX = e.clientX;
-}, { passive: false });
+}
 
-
-// Pointer released
-window.addEventListener('pointerup', () => {
+function onPointerUp() {
     isDragging = false;
 
     setTimeout(() => {
         wasDragging = false;
     }, 200);
-});
-
-
-// Pointer leaves the window
-window.addEventListener('pointerleave', () => {
-    isDragging = false;
-    wasDragging = false;
-});
-
+}
 
 function onImageClick(e: MouseEvent, index: number) {
     if (isDragging || wasDragging) return;
@@ -231,8 +218,14 @@ function depthFilter(depth: number): string{
         </div>
     </fieldset>
     </div>
-    <div class="helix-container" :style="{ transform: ` translate(-50%,-50%) scale(${zoom})` }">
-        <div v-for="(image, i) in images" :key="`item-${i}`"
+    <div class="helix-container" 
+        @wheel="onWheel"
+        @pointerdown="onPointerDown"
+        @pointermove="onPointerMove"
+        @pointerup="onPointerUp"
+        @pointercancel="onPointerUp"
+        :style="{ transform: ` translate(-50%,-50%) scale(${zoom})` }">
+        <div v-for="(image, i) in images" :key="`item-${i}-${image}`"
             class="helix-item" 
             @click="(e)=>onImageClick(e,i)"
             :style="{
@@ -242,7 +235,7 @@ function depthFilter(depth: number): string{
             }">
             <img :src="image" alt="Image in a helix" class="helix-image"/>
         </div>
-        <div v-for="(image, i) in images" :key="`reverse-item-${i}`"
+        <div v-for="(image, i) in images" :key="`reverse-item-${i}-${image}`"
             class="helix-item" 
             @click="(e)=>onImageClick(e, i)"
             :style="{
@@ -326,7 +319,14 @@ function depthFilter(depth: number): string{
     z-index: 5;
     transform: translateY(-50%);
 }
-
+.controls,
+.controls *,
+input,
+button,
+textarea {
+    touch-action: auto;
+    user-select: auto;
+}
 .separation-container {
     margin: 0;
     padding: 0.75rem 1rem;

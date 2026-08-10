@@ -9,7 +9,7 @@ import axelImage from '@/assets/images/axel.jpg';
 const people = [
   {
     name: 'Jeffrey Cornillie',
-    role: 'Generalist builder',
+    role: 'Generalist',
     focus: 'Enthused by everything code, design, and motion. Simply enjoys everything that can be built and shared with others.',
     quote: '"I like building things that feel thoughtful, usable, and hopefully a little bit memorable."',
     color: '#6ee7ff',
@@ -30,7 +30,7 @@ const people = [
   },
   {
     name: 'Axel Martens',
-    role: 'Generalist builder',
+    role: 'Generalist',
     focus: 'Enjoys working on things that improve the world, and learning new skills along the way.',
     quote: '"I’m happiest when a project feels both imaginative and intentional."',
     color: '#a855f7',
@@ -42,6 +42,7 @@ const people = [
   },
 ];
 people.forEach((person) => (person.image = new URL(person.image ?? '', import.meta.url).href));
+people.sort(() => Math.random() - 0.5);
 </script>
 
 <template>
@@ -92,12 +93,14 @@ people.forEach((person) => (person.image = new URL(person.image ?? '', import.me
 
 .people-list {
   width: 100%;
+  max-width: 100vw;
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 .person {
   width: max-content;
+  max-width: 100vw;
   padding: 1rem 5rem;
 }
 .person-row {
@@ -240,6 +243,16 @@ h2 {
 
   .person-image {
     justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .person {
+    padding: 1rem 2rem;
+    flex-direction: column;
+  }
+  .person-row{
+    grid-template-columns: 1fr !important;
   }
 }
 </style>

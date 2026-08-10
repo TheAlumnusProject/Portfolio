@@ -26,11 +26,11 @@ const rerender = () => {
 
 <template>
     <div class="content">
-        <div class="text-controls">
-            <h2>Add your own photo links</h2>
+        <fieldset class="text-controls">
+            <legend>Add your own photo links</legend>
             <textarea v-model="inputText" rows="5" cols="50" placeholder="Enter your photo links here, one line per entry"></textarea>
             <button @click="rerender">Confirm changes</button>
-        </div>
+        </fieldset>
         <Helix :images="imageUrls" />
     </div>
 </template>
@@ -42,14 +42,26 @@ const rerender = () => {
 }
 .text-controls {
     position: absolute;
-    top: 1rem;
+    top: 4rem;
     left: 1rem;
     z-index: 50;
     border: 1px solid var(--surface-strong);
-    background-color: transparent;
     color: var(--text-primary);
     padding: 1rem;
     border-radius: 8px;
     z-index: 10;
+}
+.text-controls textarea{
+    background-color: transparent;
+    resize: none;
+    height: 15vh;
+}
+.text-controls button {
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    background-color: var(--bg2);
+    color: var(--text);
+    cursor: pointer;
 }
 </style>

@@ -19,8 +19,8 @@ interface ShowcaseItem {
   tags: string[];
   featured?: boolean;
 }
-const allCategories = ['3D & WebGL', 'Games & Interactive', 'Media & Demonstrations', 'External Projects'];
-const allTags = ['Three.js', 'WebGL', '3D', 'Animation', 'Visual', 'Gallery', 'VR', 'Interactive', 'Procedural Generation', 'Gaming', 'JavaScript', 'Open Source', 'Video'];
+const allCategories = ['3D & WebGL', 'Web Development', 'Games & Interactive', 'Media & Demonstrations', 'External Projects', 'Desktop & Utilities'];
+const allTags = ['Web', 'Code','C#', 'WPF', 'ZMK', 'Keyboard', 'Desktop', 'Three.js', 'WebGL', '3D', 'Animation', 'Visual', 'Gallery', 'VR', 'Interactive', 'Procedural Generation', 'Gaming', 'JavaScript', 'Open Source', 'Video'];
 
 const showcaseItems = reactive<ShowcaseItem[]>([
   // 3D & WebGL Section
@@ -35,38 +35,6 @@ const showcaseItems = reactive<ShowcaseItem[]>([
     tags: ['Three.js', 'WebGL', '3D', 'Animation'],
     featured: true,
   },
-  {
-    id: 'image-helix',
-    title: 'Image Helix Viewer',
-    description: 'A 3D helix layout for displaying images in a visually engaging manner.',
-    icon: 'helix',
-    category: 'Media & Demonstrations, 3D & WebGL',
-    type: 'internal',
-    route: '/showcase/helix',
-    tags: ['Visual', 'WebGL', '3D', 'Gallery'],
-    featured: true,
-  },
-  {
-    id: 'vr-experience',
-    title: 'VR Experience - Dichotomy',
-    description: 'An immersive VR experience built with Three.js featuring an interactive 3D worlds and spatial interactions.',
-    icon: 'vr',
-    category: '3D & WebGL',
-    type: 'internal',
-    route: '/three/vr-demo',
-    tags: ['VR', 'Three.js', 'Interactive'],
-  },
-  {
-    id: 'procedural-gen',
-    title: 'Procedural Terrain Generation',
-    description: 'Dynamically generated 3D landscapes using noise algorithms and WebGL rendering.',
-    icon: 'terrain',
-    category: '3D & WebGL',
-    type: 'internal',
-    route: '/three/terrain',
-    tags: ['Three.js', 'Procedural Generation', 'WebGL'],
-  },
-
   // Games & Interactive
   {
     id: 'web-game',
@@ -77,7 +45,6 @@ const showcaseItems = reactive<ShowcaseItem[]>([
     type: 'internal',
     route: '/game',
     tags: ['Gaming', 'Interactive', 'JavaScript'],
-    featured: true,
   },
   {
     id: 'unreal-game',
@@ -92,6 +59,17 @@ const showcaseItems = reactive<ShowcaseItem[]>([
 
   // Media & Demonstrations
   {
+    id: 'image-helix',
+    title: 'Image Helix Viewer',
+    description: 'A 3D helix layout for displaying images in a visually engaging manner.',
+    icon: 'helix',
+    category: 'Media & Demonstrations, 3D & WebGL',
+    type: 'internal',
+    route: '/showcase/helix',
+    tags: ['Visual', 'WebGL', '3D', 'Gallery'],
+    featured: true,
+  },
+  {
     id: 'feature-reel',
     title: 'Feature Showcase Reel',
     description: 'A video compilation of our most impressive features and technical achievements from past projects.',
@@ -100,7 +78,6 @@ const showcaseItems = reactive<ShowcaseItem[]>([
     type: 'video',
     videoUrl: 'https://www.youtube.com/',
     tags: ['Video', 'Showcase', 'Features'],
-    featured: true,
   },
   // External Projects
   {
@@ -122,6 +99,39 @@ const showcaseItems = reactive<ShowcaseItem[]>([
     type: 'external',
     link: 'https://example.com',
     tags: ['Live', 'Production', 'Demo'],
+  },
+  {
+    id: 'kb-glance',
+    title: 'KB-Glance',
+    description: 'A WPF desktop application that listens for custom ZMK keyboard combos and automatically displays the keymap layout for the active layer.',
+    icon: 'keyboard',
+    category: 'Desktop & Utilities',
+    type: 'external',
+    link: 'https://github.com/CornillieJ/KBGlance',
+    tags: ['C#', 'WPF', 'ZMK', 'Keyboard', 'Desktop'],
+    featured: true,
+  },
+  {
+    id: 'keysplash',
+    title: 'KeySplash',
+    description: 'A WPF desktop application featuring an animated Bongo Cat splash screen that reacts to your keystrokes with playful tapping animations.',
+    icon: 'keysplash',
+    category: 'Desktop & Utilities',
+    type: 'external',
+    link: 'https://github.com/CornillieJ/KerSplash',
+    tags: ['C#', 'WPF', 'Animation', 'Desktop'],
+    featured: true,
+  },
+  {
+    id: 'code-snippy',
+    title: 'CodeSnippy',
+    description: 'A full stack web application for creating, saving, and sharing code snippets with an integrated code editor for writing and managing code directly in the browser.',
+    icon: 'code',
+    category: 'Web Development',
+    type: 'external',
+    link: 'https://codesnippy.runasp.net/',
+    tags: ['Web', 'Code', 'Full Stack'],
+    featured: true,
   },
 ]);
 

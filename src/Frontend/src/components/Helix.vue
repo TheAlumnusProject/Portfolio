@@ -14,40 +14,47 @@ const images = ref<string[]>([]);
 while (images.value.length < 100) {
     images.value.push(...props.images);
 }
-const amount = computed(() => props.images.length / 2);
-const turns = 1;
-const radius = ref(25);
+const amount = computed(() => props.images.length);
+const turns = 2;
+const radius = ref(15);
 const maxBlur = 5;
 const brightnessFloor = 0.5;
-const forwardSpeed = 5;
 const elapsed = ref(0);
-const speed = ref(0.5);
+const speed = ref(0.1);
 const autoSpin = ref(true);
-const containerHeight = 200;
 const fillBottom = 200;
-const fillTop = 400;
+const fillTop = 200;
+const containerHeight = 300;
 const zoom = ref(1);
-
+const imagesPerTurn = ref(12);
 const showControls = ref(true);
 
 
 const depthOf = (angle: number): number => (Math.cos(angle) + 1) / 2;
 
-function helixTransform(angle: number, y: number, isReverse: boolean = false): string {
-    const range = containerHeight + fillTop + fillBottom
-    const translateY = ((y + fillBottom) % range) - fillBottom
-    // if (isReverse) {
-    //     return `translate(-50%,-50%) rotateY(${angle.toFixed(4)}rad) translateZ(${-radius}vw) translateY(${translateY.toFixed(1)}vh)`;
-    // }
-	return `translate(-50%,-50%) rotateY(${angle.toFixed(4)}rad) translateZ(${radius.value}vw) translateY(${translateY.toFixed(1)}vh)`;
-}
-const helixAngle = (progress: number, phase: number, isReverse: boolean = false): number =>    
-    isReverse 
-    ? -progress * turns * 2 * Math.PI + phase 
-    : progress * turns * 2 * Math.PI + phase;
+function helixTransform(angle: number, y: number): string {
+    const range = containerHeight + fillTop + fillBottom;
+    const wrappedY = ((y + fillBottom) % range + range) % range - fillBottom;
+    const translateY = wrappedY;
 
-const helixHeight = (progress: number, phase : number): number => 
-    (100 * progress - 50) + phase * forwardSpeed;
+    return `
+        translate(-50%, -50%)
+        rotateY(${angle.toFixed(4)}rad)
+        translateZ(${radius.value}vw)
+        translateY(${translateY.toFixed(1)}vh)
+    `;
+}
+
+const helixHeight = (index: number, phase: number): number => {
+    const progress = index / imagesPerTurn.value + phase;
+    return progress * 100;
+};
+
+const helixAngle = (index: number, phase: number): number => {
+    const anglePerImage = (2 * Math.PI) / imagesPerTurn.value;
+    return index * anglePerImage + phase * 2 * Math.PI;
+};
+
 
 function depthFilter(depth: number): string{
 	const brightness = brightnessFloor + (1 - brightnessFloor) * depth * depth;
@@ -61,11 +68,8 @@ let lastFrame = performance.now();
 const frame = (now: number): void => {
 	const dt = Math.min((now - lastFrame) / 1000, 0.1);
 	lastFrame = now;
-
     if(autoSpin.value) 
         elapsed.value += dt * speed.value;
-
-
 	requestAnimationFrame(frame);
 };
 
@@ -89,7 +93,7 @@ requestAnimationFrame(frame);
       <legend>Controls</legend>
         <div class="speed-controls">
         <h4>Speed Control</h4>
-        <input type="range" v-model="speed" min="0.05" max="1.5" step="0.01" />
+        <input type="range" v-model="speed" min="0.005" max="0.5" step="0.005" />
         </div>
         <div class="toggle-controls">
           <h4>Auto Spin</h4>
@@ -101,7 +105,11 @@ requestAnimationFrame(frame);
         </div>
         <div class="radius-controls">
           <h4>Radius</h4>
-          <input type="range" v-model="radius" min="10" max="100" step="1" />
+          <input type="range" v-model="radius" min="5" max="50" step="1" />
+        </div>
+        <div class="spacing-controls">
+          <h4>Spacing</h4>
+          <input type="range" v-model="imagesPerTurn" min="5" max="20" step="1" />
         </div>
     </fieldset>
     </div>
@@ -112,10 +120,38 @@ requestAnimationFrame(frame);
             :src="image"
             alt="Image in a helix"
             class="helix-image"
+            @click="autoSpin = !autoSpin"
             :style="{
-                transform: helixTransform(helixAngle((i / amount), elapsed), helixHeight(i / amount, elapsed)),
-                filter: depthFilter(depthOf(helixAngle(i / amount, elapsed))),
-                zIndex: Math.round(depthOf(helixAngle(i / amount, elapsed)) * 100),
+                transform: helixTransform(
+                    helixAngle(i, elapsed),
+                    helixHeight(i, elapsed)
+                ),
+                filter: depthFilter(
+                    depthOf(helixAngle(i, elapsed))
+                ),
+                zIndex: Math.round(
+                    depthOf(helixAngle(i, elapsed)) * 100
+                ),
+            }"
+        />
+        <img
+            v-for="(image, i) in images"
+            :key="`reverse-${i}`"
+            :src="image"
+            alt="Image in a helix"
+            class="helix-image reverse-strand"
+            @click="autoSpin = !autoSpin"
+            :style="{
+                transform: helixTransform(
+                    helixAngle(i, elapsed) + Math.PI,
+                    helixHeight(i, elapsed)
+                ),
+                filter: depthFilter(
+                    depthOf(helixAngle(i, elapsed) + Math.PI)
+                ),
+                zIndex: Math.round(
+                    depthOf(helixAngle(i, elapsed) + Math.PI) * 100
+                ),
             }"
         />
     </div>
@@ -144,13 +180,12 @@ requestAnimationFrame(frame);
     left: 50%;
     transform: translate(-50%,-50%);
     width: 100vw;
-    height: 400vh;
+    height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
-    perspective: 10000px;
+    perspective: 1000px;
 	perspective-origin: 50% 50%;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 .helix-image {
     position: absolute;

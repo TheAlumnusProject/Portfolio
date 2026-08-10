@@ -24,7 +24,7 @@ onMounted(() => {
             speed.value = defaultSpeed;
             clearInterval(interval);
         }
-    }, 100);
+    }, 50);
 });
 
 
@@ -44,6 +44,7 @@ const showControls = ref(true);
 let lastFrame = performance.now();
 let lastX = 0;
 let isDragging = false;
+let wasDragging = false;
 const minDragDistance = 5;
 let savedAutoSpin = autoSpin.value;
 //#endregion
@@ -84,8 +85,16 @@ window.addEventListener('wheel', (e) => {
         elapsed.value += speed.value * 0.2;
 });
 
-window.addEventListener('pointerup', ()=>isDragging = false);
-window.addEventListener('pointerleave', ()=>isDragging = false);
+window.addEventListener('pointerup', ()=>{
+    isDragging = false;
+    setTimeout(()=>{
+        wasDragging = false;
+    }, 200);
+});
+window.addEventListener('pointerleave', ()=>{
+    isDragging = false;
+    wasDragging = false;
+});
 window.addEventListener('pointerdown', (e) => {
     lastX = e.clientX;
     isDragging = true;
@@ -93,6 +102,7 @@ window.addEventListener('pointerdown', (e) => {
 
 window.addEventListener('mousemove', (e) => {
     if (!isDragging) return;
+    wasDragging = true;
     const deltaX = e.clientX - lastX;
     if (Math.abs(deltaX) < minDragDistance) return;
     e.preventDefault();
@@ -102,8 +112,10 @@ window.addEventListener('mousemove', (e) => {
 
 
 function onImageClick(e : MouseEvent,index: number){
+    if(isDragging || wasDragging) return;
     e.stopPropagation();
-    if(depthOf(index) > 0.04) return;
+    // console.log('depthOf(index)', depthOf(index));
+    if(depthOf(index) < 0.91) return;
 
     selectedElement.value = e.target as HTMLElement;
     selectedElement.value.classList.add('selected-image');

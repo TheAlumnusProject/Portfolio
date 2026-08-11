@@ -53,9 +53,7 @@ const images = computed(() => {
     }
     return result;
 });
-const imagesPerTurn = computed(()=>{
-    return radius.value;
-})
+const imagesPerTurn = ref(8);
 const containerHeight = computed(() => {
     const minimum = 200;
     const amountOfImages = images.value.length * 4;
@@ -216,6 +214,10 @@ function depthFilter(depth: number): string{
           <h4>Radius</h4>
           <input type="range" v-model="radius" min="5" max="20" step="1" />
         </div>
+        <div class="images-per-turn-controls">
+          <h4>Images per Turn</h4>
+          <input type="range" v-model="imagesPerTurn" min="3" max="20" step="1" />
+        </div>
     </fieldset>
     </div>
     <div class="helix-container" 
@@ -297,8 +299,9 @@ function depthFilter(depth: number): string{
     overflow: hidden;
     margin: 0;
     padding: 0;
-
+    object-fit: cover;
     touch-action: none;
+    height: clamp(80px, 10vw, 150px);
 }
 .helix-image {
     margin: 0;
@@ -306,6 +309,12 @@ function depthFilter(depth: number): string{
     width: 100%;
     border-radius: 10px;
     pointer-events: none;
+    background-color: var(--bg2);
+}
+img{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
 }
 .controls {
     position: fixed;
@@ -393,16 +402,12 @@ textarea {
     position: fixed;
     top: 50%;
     left: 50%;
-
     transform: translate(-50%, -50%);
-
-    max-width: 90dvw;
-    max-height: 85dvh;
-
+    max-width: 80vw;
+    max-height: 80vh;
     z-index: 1000;
-
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-
+    object-fit: contain;
     animation: popIn 0.3s ease-out;
 }
 .overlay {

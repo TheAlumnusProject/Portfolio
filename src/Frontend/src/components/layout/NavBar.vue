@@ -4,6 +4,7 @@ import { ref } from 'vue';
 import { onMounted } from 'vue';
 import { useTheme } from '@/composables/useTheme';
 import type { ThemeName } from '@/composables/useTheme';
+import tapIcon from '@/assets/images/tap-icon.png';
 
 const route = useRoute();
 const { currentTheme, toggleTheme, applyTheme, themes } = useTheme();
@@ -89,7 +90,7 @@ onMounted(() => {
   <header class="nav-shell">
     <nav class="nav-bar">
       <div class="brand" @click="handleClick">
-        <span class="brand-mark">T</span>
+        <span class="brand-mark"><img :src="tapIcon" alt="TAP logo" /></span>
         <span class="brand-text">
           <span>
             <strong>The Alumnus Project</strong>
@@ -156,10 +157,6 @@ onMounted(() => {
   color: var(--accent);
 }
 
-.brand:hover .brand-mark {
-  box-shadow: 0 0 50px var(--accent-weak);
-}
-
 .brand strong {
   display: block;
   font-size: 0.94rem;
@@ -181,12 +178,15 @@ onMounted(() => {
   place-items: center;
   width: 2.4rem;
   height: 2.4rem;
-  border-radius: 50%;
   font-weight: 700;
   color: #06070c;
-  background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
-  box-shadow: 0 0 30px var(--accent-weak);
   flex-shrink: 0;
+}
+
+.brand-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .nav-links {

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
-import { RouterLink } from 'vue-router';
 import GlowCard from '@/components/GlowCard.vue';
 import Pill from '@/components/Pill.vue';
 import PageIntro from '@/components/PageIntro.vue';
 import IconDisplay from '@/components/IconDisplay.vue';
+import InteractiveButton from '@/components/InteractiveButton.vue';
 
 interface ShowcaseItem {
   id: string;
@@ -20,7 +20,7 @@ interface ShowcaseItem {
   featured?: boolean;
 }
 const allCategories = ['3D & WebGL', 'Web Development', 'Games & Interactive', 'Media & Demonstrations', 'External Projects', 'Desktop & Utilities'];
-const allTags = ['Web', 'Code','C#', 'WPF', 'ZMK', 'Keyboard', 'Desktop', 'Three.js', 'WebGL', '3D', 'Animation', 'Visual', 'Gallery', 'VR', 'Interactive', 'Procedural Generation', 'Gaming', 'JavaScript', 'Open Source', 'Video'];
+const allTags = ['Web', 'Code', 'C#', 'WPF', 'ZMK', 'Keyboard', 'Desktop', 'Three.js', 'WebGL', '3D', 'Animation', 'Visual', 'Gallery', 'VR', 'Interactive', 'Procedural Generation', 'Gaming', 'JavaScript', 'Open Source', 'Video'];
 
 const showcaseItems = reactive<ShowcaseItem[]>([
   // 3D & WebGL Section
@@ -150,7 +150,8 @@ const filteredFeatured = () => {
 
 <template>
   <section class="page-section">
-    <PageIntro eyebrow="Showcase" heading="Our creative and technical achievements." description="A curated collection of projects, experiments, and features we've built over the years. From immersive 3D experiences to interactive games and innovative applications." />
+    <PageIntro heading="Showcase" subheading="Our creative and technical achievements."
+      description="A curated collection of projects, experiments, and features we've built for this project. From immersive 3D experiences to interactive games and innovative applications." />
 
     <!-- Featured Section -->
     <div v-if="!selectedCategory" class="featured-section">
@@ -164,14 +165,15 @@ const filteredFeatured = () => {
           <h3>{{ item.title }}</h3>
           <p class="card-description">{{ item.description }}</p>
           <div class="tags-row">
-            <Pill v-for="tag in item.tags.slice(0, 2)" :key="tag" color="#e4d9ff" backgroundColor="rgba(168, 85, 247, 0.16)">
+            <Pill v-for="tag in item.tags.slice(0, 2)" :key="tag" color="#e4d9ff"
+              backgroundColor="rgba(168, 85, 247, 0.16)">
               {{ tag }}
             </Pill>
           </div>
           <div class="card-action">
-            <RouterLink v-if="item.type === 'internal' && item.route" :to="item.route" class="action-link"> Explore → </RouterLink>
-            <a v-else-if="item.type === 'external' && item.link" :href="item.link" target="_blank" rel="noopener noreferrer" class="action-link"> Visit → </a>
-            <a v-else-if="item.type === 'video' && item.videoUrl" :href="item.videoUrl" target="_blank" rel="noopener noreferrer" class="action-link"> Watch → </a>
+            <InteractiveButton v-if="item.type === 'internal' && item.route" :to="item.route" class="action-link">Explore →</InteractiveButton>
+            <InteractiveButton v-else-if="item.type === 'external' && item.link" :href="item.link" external class="action-link">Visit →</InteractiveButton>
+            <InteractiveButton v-else-if="item.type === 'video' && item.videoUrl" :href="item.videoUrl" external class="action-link">Watch →</InteractiveButton>
           </div>
         </GlowCard>
       </div>
@@ -179,8 +181,10 @@ const filteredFeatured = () => {
 
     <!-- Category Filter -->
     <div class="category-filter">
-      <button class="filter-btn" :class="{ active: !selectedCategory }" @click="selectedCategory = null">All Projects</button>
-      <button v-for="category in categories" :key="category" class="filter-btn" :class="{ active: selectedCategory === category }" @click="selectedCategory = category">
+      <button class="filter-btn" :class="{ active: !selectedCategory }" @click="selectedCategory = null">All
+        Projects</button>
+      <button v-for="category in categories" :key="category" class="filter-btn"
+        :class="{ active: selectedCategory === category }" @click="selectedCategory = category">
         {{ category }}
       </button>
     </div>
@@ -201,16 +205,17 @@ const filteredFeatured = () => {
             <p class="card-description">{{ item.description }}</p>
 
             <div class="tags-row">
-              <Pill v-for="tag in item.tags.slice(0, 3)" :key="tag" color="#c9e4ff" backgroundColor="rgba(110, 231, 255, 0.16)">
+              <Pill v-for="tag in item.tags.slice(0, 3)" :key="tag" color="#c9e4ff"
+                backgroundColor="rgba(110, 231, 255, 0.16)">
                 {{ tag }}
               </Pill>
             </div>
           </div>
 
           <div class="card-footer">
-            <RouterLink v-if="item.type === 'internal' && item.route" :to="item.route" class="card-button"> Explore </RouterLink>
-            <a v-else-if="item.type === 'external' && item.link" :href="item.link" target="_blank" rel="noopener noreferrer" class="card-button"> Visit </a>
-            <a v-else-if="item.type === 'video' && item.videoUrl" :href="item.videoUrl" target="_blank" rel="noopener noreferrer" class="card-button"> Watch Video </a>
+            <InteractiveButton v-if="item.type === 'internal' && item.route" :to="item.route" class="card-button">Explore</InteractiveButton>
+            <InteractiveButton v-else-if="item.type === 'external' && item.link" :href="item.link" external class="card-button">Visit</InteractiveButton>
+            <InteractiveButton v-else-if="item.type === 'video' && item.videoUrl" :href="item.videoUrl" external class="card-button">Watch Video</InteractiveButton>
           </div>
         </GlowCard>
       </template>
@@ -267,7 +272,7 @@ const filteredFeatured = () => {
 }
 
 .featured-badge {
-  background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
+  background-color: var(--accent);
   color: #04050b;
   padding: 0.3rem 0.8rem;
   border-radius: 999px;
@@ -299,28 +304,6 @@ const filteredFeatured = () => {
 .action-link,
 .card-button {
   align-self: flex-start;
-  padding: 0.7rem 1.3rem;
-  background: linear-gradient(135deg, var(--accent), var(--accent-weak));
-  border: none;
-  border-radius: 0.6rem;
-  color: var(--text);
-  font-weight: 600;
-  font-size: 0.9rem;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  display: inline-block;
-}
-
-.action-link:hover,
-.card-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(110, 231, 255, 0.3);
-}
-
-.action-link:active,
-.card-button:active {
-  transform: translateY(0);
 }
 
 .category-filter {
@@ -351,8 +334,8 @@ const filteredFeatured = () => {
 }
 
 .filter-btn.active {
-  background: linear-gradient(135deg, rgba(110, 231, 255, 0.25), rgba(255, 122, 217, 0.15));
-  border-color: rgba(110, 231, 255, 0.4);
+  background: var(--accent-weak);
+  border-color: var(--accent);
   color: #f7fbff;
 }
 

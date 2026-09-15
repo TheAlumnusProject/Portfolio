@@ -6,7 +6,8 @@ export default defineComponent({
   setup() {
     onMounted(() => createStars());
     onUnmounted(() => removeStars());
-    window.addEventListener('resize', () => {
+    const content = document.querySelector('.content') as HTMLElement;
+    content.addEventListener('resize', () => {
       removeStars();
       createStars();
     });
@@ -24,6 +25,8 @@ function removeStars() {
   if (existingWrapper) {
     existingWrapper.remove();
   }
+  const existingDivs = document.querySelectorAll('sparkleDiv');
+  existingDivs.forEach((div) => div.remove());
 }
 
 function createStars() {
@@ -59,6 +62,9 @@ function createStars() {
 
   const parent = document.querySelector('.content');
   if (parent) parent.appendChild(sparkleWrapper);
+  parent?.addEventListener('unload', () => {
+    removeStars();
+  }); 
 }
 </script>
 

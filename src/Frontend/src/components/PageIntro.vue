@@ -1,7 +1,7 @@
 <script setup lang="ts">
 interface Props {
-  eyebrow: string;
   heading: string;
+  subheading: string;
   description: string;
 }
 
@@ -10,8 +10,8 @@ defineProps<Props>();
 
 <template>
   <div class="hero-copy">
-    <p class="eyebrow">{{ eyebrow }}</p>
     <h1>{{ heading }}</h1>
+    <p class="subheading">{{ subheading }}</p>
     <p>{{ description }}</p>
     <slot />
   </div>
@@ -24,19 +24,19 @@ defineProps<Props>();
   max-width: 760px;
 }
 
-.eyebrow {
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.3em;
-  font-size: 0.76rem;
-  margin: 0;
-}
-
 h1 {
   font-size: clamp(2rem, 3.4vw, 3rem);
   line-height: 1.08;
   margin: 0;
   color: #f5f8ff;
+}
+
+.subheading {
+  color: var(--accent);
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  font-weight: 500;
+  line-height: 1.3;
+  margin: 0;
 }
 
 p {

@@ -3,6 +3,7 @@ import { ref, reactive } from 'vue';
 import GlowCard from '@/components/GlowCard.vue';
 import Pill from '@/components/Pill.vue';
 import PageIntro from '@/components/PageIntro.vue';
+import InteractiveButton from '@/components/InteractiveButton.vue';
 
 interface AIProject {
   id: string;
@@ -34,18 +35,21 @@ const selectedProject = ref<string | null>(null);
 
 <template>
   <section class="page-section">
-    <PageIntro eyebrow="AI Studio" heading="Small AI-powered creative projects." description="A collection of interactive tools that generate unique content. Each project showcases a different AI capability." />
+    <PageIntro heading="AI Studio" subheading="Small AI-powered creative projects."
+      description="A collection of interactive tools that generate unique content." />
 
     <div class="projects-grid">
-      <GlowCard v-for="project in projects" :key="project.id" class="project-card" :class="{ active: selectedProject === project.id, disabled: project.status === 'coming-soon' }">
+      <GlowCard v-for="project in projects" :key="project.id" class="project-card"
+        :class="{ active: selectedProject === project.id, disabled: project.status === 'coming-soon' }">
         <div class="project-header">
           <h3>{{ project.name }}</h3>
         </div>
 
         <p class="project-description">{{ project.description }}</p>
 
-        <Pill v-if="project.status === 'coming-soon'" color="var(--text)" backgroundColor="var(--bg)"> Coming soon </Pill>
-        <button v-else class="project-button">Launch Project</button>
+        <Pill v-if="project.status === 'coming-soon'" color="var(--text)" backgroundColor="var(--bg)"> Coming soon
+        </Pill>
+        <InteractiveButton v-else size="compact" class="project-button">Launch Project</InteractiveButton>
       </GlowCard>
     </div>
   </section>
@@ -108,24 +112,6 @@ h3 {
 
 .project-button {
   align-self: flex-start;
-  padding: 0.6rem 1.2rem;
-  background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
-  border: none;
-  border-radius: 0.6rem;
-  color: #04050b;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-}
-
-.project-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(110, 231, 255, 0.2);
-}
-
-.project-button:active {
-  transform: translateY(0);
 }
 
 @media (max-width: 900px) {

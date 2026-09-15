@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import GlowCard from '@/components/GlowCard.vue';
 import PageIntro from '@/components/PageIntro.vue';
+import InteractiveButton from '@/components/InteractiveButton.vue';
 </script>
 
 <template>
   <section class="page-section">
-    <PageIntro eyebrow="Contact / start a conversation" heading="Let the project grow through thoughtful feedback and ideas." description="Whether you want to talk about the visual direction or the roadmap, this space is ready for the next step." />
+    <PageIntro heading="Contact us" subheading="Help our project grow, or hire us for your next project"
+      description="Whether you have a question, feedback, or just want to say hi, we'd love to hear from you." />
 
     <div class="card-grid">
       <GlowCard :tiltStrength="3">
@@ -14,7 +16,7 @@ import PageIntro from '@/components/PageIntro.vue';
           <input type="text" placeholder="Your name" />
           <input type="email" placeholder="Email" />
           <textarea rows="4" placeholder="What do you have in mind?" />
-          <button type="button">Send note</button>
+          <InteractiveButton>Send note</InteractiveButton>
         </form>
       </GlowCard>
 
@@ -59,16 +61,6 @@ textarea {
   padding: 0.8rem 0.95rem;
   background: var(--surface);
   color: var(--text);
-}
-
-button {
-  border: none;
-  border-radius: 999px;
-  padding: 0.8rem 1rem;
-  color: var(--bg);
-  font-weight: 700;
-  background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
-  cursor: pointer;
 }
 
 .contact-list {

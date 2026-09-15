@@ -9,9 +9,9 @@ import axelImage from '@/assets/images/axel.jpg';
 const people = [
   {
     name: 'Jeffrey Cornillie',
-    role: 'Generalist',
+    role: 'Full Stack Developer @ VWO - KuLeuven',
     focus: 'Enthused by everything code, design, and motion. Simply enjoys everything that can be built and shared with others.',
-    quote: '"I like building things that feel thoughtful, usable, and hopefully a little bit memorable."',
+    quote: '"Design with your mind · Build with your hands ·  Contribute with your heart"',
     color: '#6ee7ff',
     image: jeffreyImage,
     links: [
@@ -47,7 +47,8 @@ people.sort(() => Math.random() - 0.5);
 
 <template>
   <section class="page-section">
-    <PageIntro eyebrow="People / the team" heading="Meet the team behind this project." description="Three generalists learning, building, and shaping this prototype together." />
+    <PageIntro heading="People / the team" subheading="Meet the team behind this project."
+      description="Three generalists learning, building, and shaping this prototype together." />
 
     <div class="people-list">
       <GlowCard v-for="person in people" :key="person.name" class="person" :tiltStrength="3">
@@ -73,7 +74,8 @@ people.sort(() => Math.random() - 0.5);
             <blockquote class="quote">{{ person.quote }}</blockquote>
 
             <div class="links-row">
-              <a v-for="link in person.links" :key="link.label" :href="link.url" target="_blank" rel="noopener noreferrer">
+              <a v-for="link in person.links" :key="link.label" :href="link.url" target="_blank"
+                rel="noopener noreferrer">
                 {{ link.label }}
               </a>
             </div>
@@ -98,11 +100,13 @@ people.sort(() => Math.random() - 0.5);
   flex-direction: column;
   gap: 1rem;
 }
+
 .person {
   width: max-content;
   max-width: 100vw;
   padding: 1rem 5rem;
 }
+
 .person-row {
   display: grid;
   gap: 2rem;
@@ -111,6 +115,7 @@ people.sort(() => Math.random() - 0.5);
 .person:nth-child(odd) {
   align-self: flex-start;
 }
+
 .person:nth-child(odd) .person-row {
   grid-template-columns: 180px 1fr;
 }
@@ -118,12 +123,15 @@ people.sort(() => Math.random() - 0.5);
 .person:nth-child(even) {
   align-self: flex-end;
 }
+
 .person:nth-child(even) .person-row {
   grid-template-columns: 1fr 180px;
 }
+
 .person:nth-child(even) .person-image {
   order: 2;
 }
+
 .person:nth-child(even) .person-content {
   order: 1;
   text-align: right;
@@ -148,6 +156,7 @@ people.sort(() => Math.random() - 0.5);
   background: linear-gradient(135deg, var(--accent), rgba(255, 255, 255, 0.1));
   transition: all 500ms ease;
 }
+
 .avatar img {
   width: 100%;
   height: 100%;
@@ -155,6 +164,7 @@ people.sort(() => Math.random() - 0.5);
   border-radius: inherit;
   position: absolute;
 }
+
 .avatar:hover {
   transform: scale(1.2) translateZ(0.1rem);
   box-shadow: 0 0 80px black;
@@ -193,6 +203,7 @@ h2 {
   font-style: italic;
   line-height: 1.6;
 }
+
 .person:nth-child(even) .quote {
   border-left: none;
   border-right: 3px solid var(--accent, #6ee7ff);
@@ -222,6 +233,7 @@ h2 {
 }
 
 @media (max-width: 768px) {
+
   .person-row,
   .person:nth-child(even) .person-row {
     grid-template-columns: 1fr;
@@ -252,7 +264,8 @@ h2 {
     flex-direction: column;
     max-width: 90vw;
   }
-  .person-row{
+
+  .person-row {
     grid-template-columns: 1fr !important;
     max-width: 90vw;
   }

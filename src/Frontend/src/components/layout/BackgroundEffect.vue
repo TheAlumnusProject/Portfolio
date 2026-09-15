@@ -3,6 +3,7 @@ import { useTheme } from '@/composables/useTheme';
 import { ref, watch } from 'vue';
 import Matrix from '@/components/three/Matrix.vue';
 import PersonaStars from '@/components/PersonaStars.vue';
+import Carbon from '@/components/Carbon.vue';
 const { currentTheme, themes } = useTheme();
 
 let effect = ref<string | undefined>(undefined);
@@ -17,6 +18,7 @@ const ThemeToFollow = watch(currentTheme, (newTheme) => {
 
 <template>
   <div class="background">
+    <Carbon v-if="!effect" />
     <Matrix v-if="effect === 'matrix-rain'" />
     <PersonaStars v-if="effect === 'persona-stars'" />
   </div>

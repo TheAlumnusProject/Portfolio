@@ -5,7 +5,7 @@ import PageIntro from '@/components/PageIntro.vue';
 
 <template>
   <section class="page-section">
-    <PageIntro eyebrow="Contact / start a conversation" heading="Let the project grow through thoughtful feedback and ideas." description="Whether you want to talk about the visual direction or the roadmap, this space is ready for the next step." />
+    <PageIntro heading="Contact / start a conversation" subheading="Let the project grow through thoughtful feedback and ideas." description="Whether you want to talk about the visual direction or the roadmap, this space is ready for the next step." />
 
     <div class="card-grid">
       <GlowCard :tiltStrength="3">

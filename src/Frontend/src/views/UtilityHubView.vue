@@ -6,7 +6,7 @@ import PageIntro from '@/components/PageIntro.vue';
 
 <template>
   <section class="page-section">
-    <PageIntro eyebrow="Utility Hub / concept lab" heading="One space for quick experiments, ideas and polished demos." description="This page is designed as a flexible toolkit where each block can become a real feature later: small utilities, mini dashboards, or developer workflows." />
+    <PageIntro heading="Utility Hub / concept lab" subheading="One space for quick experiments, ideas and polished demos." description="This page is designed as a flexible toolkit where each block can become a real feature later: small utilities, mini dashboards, or developer workflows." />
 
     <div class="card-grid">
       <GlowCard>
@@ -48,24 +48,6 @@ import PageIntro from '@/components/PageIntro.vue';
 .page-section {
   display: grid;
   gap: 1.3rem;
-}
-
-.hero-copy {
-  display: grid;
-  gap: 0.7rem;
-  max-width: 760px;
-}
-
-.eyebrow {
-  color: #6ee7ff;
-  text-transform: uppercase;
-  letter-spacing: 0.3em;
-  font-size: 0.76rem;
-}
-
-h1 {
-  font-size: clamp(2rem, 3.4vw, 2.8rem);
-  line-height: 1.1;
 }
 
 .card-grid {

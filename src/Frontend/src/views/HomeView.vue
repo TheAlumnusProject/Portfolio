@@ -17,7 +17,8 @@ const terminalSize = 18;
 
 <template>
   <section class="page-section">
-    <PageIntro eyebrow="TAP / portfolio playground" heading="Elegant, modular and ready for the next big experiment." description="This landing experience blends a dark cinematic palette with futuristic motion, giving the project a premium feel from the very first screen.">
+    <PageIntro heading="portfolio playground" subheading="Our creative playground" description="A
+      collection of projects, experiments, and features we've built out of passion and curiosity.">
       <TypeTerminal :text :wrongText :prefix :timeBetweenRemoves :timeBetweenKeypresses :pauseMultiplier :idleTime :loop
         :terminalSize />
       <h3>Technologies</h3>

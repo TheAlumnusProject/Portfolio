@@ -47,7 +47,7 @@ people.sort(() => Math.random() - 0.5);
 
 <template>
   <section class="page-section">
-    <PageIntro eyebrow="People / the team" heading="Meet the team behind this project." description="Three generalists learning, building, and shaping this prototype together." />
+    <PageIntro heading="People / the team" subheading="Meet the team behind this project." description="Three generalists learning, building, and shaping this prototype together." />
 
     <div class="people-list">
       <GlowCard v-for="person in people" :key="person.name" class="person" :tiltStrength="3">

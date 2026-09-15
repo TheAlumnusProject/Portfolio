@@ -150,7 +150,7 @@ const filteredFeatured = () => {
 
 <template>
   <section class="page-section">
-    <PageIntro eyebrow="Showcase" heading="Our creative and technical achievements." description="A curated collection of projects, experiments, and features we've built over the years. From immersive 3D experiences to interactive games and innovative applications." />
+    <PageIntro heading="Showcase" subheading="Our creative and technical achievements." description="A curated collection of projects, experiments, and features we've built over the years. From immersive 3D experiences to interactive games and innovative applications." />
 
     <!-- Featured Section -->
     <div v-if="!selectedCategory" class="featured-section">

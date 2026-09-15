@@ -34,7 +34,7 @@ const selectedProject = ref<string | null>(null);
 
 <template>
   <section class="page-section">
-    <PageIntro eyebrow="AI Studio" heading="Small AI-powered creative projects." description="A collection of interactive tools that generate unique content. Each project showcases a different AI capability." />
+    <PageIntro heading="AI Studio" subheading="Small AI-powered creative projects." description="A collection of interactive tools that generate unique content. Each project showcases a different AI capability." />
 
     <div class="projects-grid">
       <GlowCard v-for="project in projects" :key="project.id" class="project-card" :class="{ active: selectedProject === project.id, disabled: project.status === 'coming-soon' }">

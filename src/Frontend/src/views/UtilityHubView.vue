@@ -6,7 +6,8 @@ import PageIntro from '@/components/PageIntro.vue';
 
 <template>
   <section class="page-section">
-    <PageIntro heading="Utility Hub / concept lab" subheading="One space for quick experiments, ideas and polished demos." description="This page is designed as a flexible toolkit where each block can become a real feature later: small utilities, mini dashboards, or developer workflows." />
+    <PageIntro heading="Utility Hub / concepts" subheading="A space for building useful tools and technical concepts"
+      description="Some interesting things we're working on." />
 
     <div class="card-grid">
       <GlowCard>

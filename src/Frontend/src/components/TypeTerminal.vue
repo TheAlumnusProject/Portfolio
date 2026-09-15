@@ -31,8 +31,45 @@ let currentResolve: (() => void) | null = null;
 const displayText = ref('');
 const displayPrefix = ref(props.prefix);
 const inputText = ref('');
+const inputElement = ref<HTMLInputElement | null>(null);
 let phase: Phase = 'idle';
 let typeInterval: any;
+let suppressBlurReset = false;
+
+type AnswerValue = string | (() => string);
+
+const answers: Record<string, AnswerValue> = {
+  ls: '\n\t- Jeffrey.dev\n\t- Niels.dev\n\t- Axel.dev',
+  whoami: () => '\n' + compliments(),
+  help: () => availableCommands(),
+  'hiring': '\nSend me a mail, let\'s talk.',
+  'sudo rm -rf /': '\nNice try. Access denied.',
+  date: () => `\n${new Date().toString()}`,
+  'cat resume.txt': '\nSee /people for our full story.',
+  'git blame': "\nIt wasn't me I swear.",
+  exit: '\nMaybe try :w ?',
+  ':w': '\nMaybe try exit ?',
+};
+const invalidCommand: string = '\nInvalid command. Use Help for a list of commands.';
+
+function availableCommands(): string {
+  const commands = Object.keys(answers);
+  return '\nAvailable commands:\n\t' + commands.join('\n\t');
+}
+function compliments(): string {
+  const compliments = [
+    'You\'re fantastic!',
+    'You\'re amazing!',
+    'You\'re great!',
+    'You\'re awesome!',
+    'You\'re the best!',
+    'You\'re outstanding!',
+    'You\'re exceptional!',
+    'You\'re brilliant!',
+    'You\'re incredible!',
+  ];
+  return compliments[Math.floor(Math.random() * compliments.length)] as string;
+}
 
 const noWrongText = !props.wrongText || props.wrongText.length === 0;
 
@@ -171,25 +208,53 @@ onUnmounted(() => {
 
 function onFocus() {
   cleanup();
-  displayText.value = inputText.value;
-}
-function onBlur() {
   inputText.value = '';
   displayText.value = '';
+}
+function onBlur() {
+  if (suppressBlurReset) {
+    suppressBlurReset = false;
+    return;
+  }
 
+  inputText.value = '';
+  displayText.value = '';
   start();
 }
 function onInput() {
   displayText.value = inputText.value;
 }
+
+function onEnter() {
+  const command = inputText.value.trim();
+  const answer = answers[command];
+  if (!answer) {
+    displayText.value += invalidCommand;
+  } else {
+    displayText.value += typeof answer === 'function' ? answer() : answer;
+  }
+
+  suppressBlurReset = true;
+  inputElement.value?.blur();
+}
+
+window.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    if (document.activeElement === inputElement.value) {
+      onEnter();
+    } else {
+      inputElement.value?.focus();
+    }
+  }
+
+})
 </script>
 
 <template>
   <div class="terminal" :style="{ '--terminal-size': terminalSize + 'px' }">
     <span class="terminal-prefix">{{ displayPrefix }}</span>
-    <!-- <input type="text" class="terminal-text" :onBlur="onBlur" :onFocus="onFocus" v-model="displayText" /> -->
     <span type="text" class="terminal-text">{{ displayText }}</span>
-    <input type="text" class="terminal-input" :onInput="onInput" :onBlur="onBlur" :onFocus="onFocus"
+    <input ref="inputElement" type="text" class="terminal-input" :onInput="onInput" :onBlur="onBlur" :onFocus="onFocus"
       v-model="inputText" />
     <span class="terminal-cursor" aria-hidden="true"></span>
   </div>
@@ -256,7 +321,7 @@ function onInput() {
   display: inline-block;
   width: 0.5em;
   height: 1.2em;
-  margin: auto 2px;
+  margin: auto 0 0.3em 0;
   background: currentColor;
   animation: terminal-blink 1s steps(1) infinite;
 }
